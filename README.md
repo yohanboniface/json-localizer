@@ -38,4 +38,4 @@ Can be a single flat value instead of an object, and then the targetted key
 will be replaced by this value.
 
 
-See tests/ for more examples.
+See [tests](https://github.com/yohanboniface/json-localizer/blob/master/tests/index.js) for more examples.
