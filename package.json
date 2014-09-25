@@ -1,6 +1,6 @@
 {
   "name": "json-localizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utility to localize a json object from another json object or a simple API",
   "main": "index.js",
   "directories": {
@@ -12,6 +12,10 @@
   "keywords": [
     "utils"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yohanboniface/json-localizer.git"
+  },
   "homepage": "https://github.com/yohanboniface/json-localizer/",
   "author": "Yohan Boniface",
   "license": "WTFPL"
