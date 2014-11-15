@@ -1,6 +1,6 @@
 # localize-json
 When you need humans to localize a json object from a
-config file. Typical use case if for a local config file to extand
+config file. Typical use case is for a local config file to extend
 an application config on the fly.
 
 ## Example
@@ -23,10 +23,10 @@ Define which object(s) to target.
 
 ### .if(rules)
 
-`rules`: object of rules to filter the targetted objects.
+`rules`: object of rules to filter the targeted objects.
 Eg.: `{'thisprop': 'hasthisvalue'}
 
-Can be a single flat value instead of an object, and then the targetted
+Can be a single flat value instead of an object, and then the targeted
 key will be checked against this value.
 
 ### .then(rules)
@@ -34,7 +34,7 @@ key will be checked against this value.
 `rules`: object of rules to apply on the filtered objects.
 Eg.: `{sethis: 'propandvalue', {anotherprop: 'tobeset'}}`
 
-Can be a single flat value instead of an object, and then the targetted key
+Can be a single flat value instead of an object, and then the targeted key
 will be replaced by this value.
 
 
