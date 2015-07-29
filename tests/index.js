@@ -10,6 +10,13 @@ var Suite = {
         assert.equal(obj.key, 'othervalue');
     },
 
+    test_simple_replace_with_function: function () {
+        var obj = {key: 'value'},
+            l = new Localizer(obj);
+        l.where('key').then(function () {return 'othervalue';});
+        assert.equal(obj.key, 'othervalue');
+    },
+
     test_replace_undefined_key_does_not_fail: function () {
         var obj = {key: 'value'},
             l = new Localizer(obj);
@@ -24,6 +31,13 @@ var Suite = {
         assert.deepEqual(obj.key, [1, 2, 3]);
     },
 
+    test_replace_by_array_with_function: function () {
+        var obj = {key: 'value'},
+            l = new Localizer(obj);
+        l.where('key').then(function () {return [1, 2, 3];});
+        assert.deepEqual(obj.key, [1, 2, 3]);
+    },
+
     test_replace_array_by_array: function () {
         var obj = {key: [3, 2, 1]},
             l = new Localizer(obj);
@@ -34,8 +48,15 @@ var Suite = {
     test_replace_nested: function () {
         var obj = {nested: {key: 'value'}},
             l = new Localizer(obj);
-        l.where('nested.key').then('value');
-        assert.deepEqual(obj.nested.key, 'value');
+        l.where('nested.key').then('othervalue');
+        assert.deepEqual(obj.nested.key, 'othervalue');
+    },
+
+    test_replace_nested_with_function: function () {
+        var obj = {nested: {key: 'value'}},
+            l = new Localizer(obj);
+        l.where('nested.key').then(function (obj) {return 'other' + obj.key;});
+        assert.deepEqual(obj.nested.key, 'othervalue');
     },
 
     test_replace_nested_with_object: function () {
@@ -45,11 +66,27 @@ var Suite = {
         assert.deepEqual(obj.nested.key, 'value');
     },
 
+    test_replace_nested_with_function_returning_object: function () {
+        var obj = {nested: {key: 'value'}},
+            l = new Localizer(obj);
+        l.where('nested.key').then(function (obj) { return {key: 'other' + obj.key};});
+        assert.deepEqual(obj.nested.key, 'othervalue');
+    },
+
     test_replace_nested_with_multiple_keys: function () {
         var obj = {nested: {key: 'value', otherkey: 'othervalue'}},
             l = new Localizer(obj);
-        l.where('nested.key').then({key: 'value', newkey: 'newvalue'});
-        assert.deepEqual(obj.nested.key, 'value');
+        l.where('nested.key').then({key: 'value2', newkey: 'newvalue'});
+        assert.deepEqual(obj.nested.key, 'value2');
+        assert.deepEqual(obj.nested.newkey, 'newvalue');
+        assert.deepEqual(obj.nested.otherkey, 'othervalue');
+    },
+
+    test_replace_nested_with_function_and_multiple_keys: function () {
+        var obj = {nested: {key: 'value', otherkey: 'othervalue'}},
+            l = new Localizer(obj);
+        l.where('nested.key').then(function (obj) {return {key: obj.key + '2', newkey: 'new' + obj.key};});
+        assert.deepEqual(obj.nested.key, 'value2');
         assert.deepEqual(obj.nested.newkey, 'newvalue');
         assert.deepEqual(obj.nested.otherkey, 'othervalue');
     },
@@ -57,8 +94,23 @@ var Suite = {
     test_replace_with_nested_path: function () {
         var obj = {nested: {key: 'value'}},
             l = new Localizer(obj);
-        l.where('nested').then({'nested.key': 'value'});
-        assert.equal(obj.nested.key, 'value');
+        l.where('nested').then({'nested.key': 'value2'});
+        assert.equal(obj.nested.key, 'value2');
+    },
+
+    test_replace_with_nested_path_and_function: function () {
+        var obj = {nested: {key: 'value'}},
+            l = new Localizer(obj);
+        l.where('nested').then(function (obj) {return {'nested.key': obj.key + '2'};});
+        assert.equal(obj.nested.key, 'value2');
+    },
+
+    test_if_with_array_and_function: function () {
+        var obj = {root: {nested: [{key: 'value'}, {key: 'othervalue'}]}},
+            l = new Localizer(obj);
+        l.where('root.nested').then(function (obj) {return {key: obj.key + '2'}; });
+        assert.equal(obj.root.nested[0].key, 'value2');
+        assert.equal(obj.root.nested[1].key, 'othervalue2');
     },
 
     test_simple_if: function () {

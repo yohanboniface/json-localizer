@@ -37,5 +37,8 @@ Eg.: `{sethis: 'propandvalue', {anotherprop: 'tobeset'}}`
 Can be a single flat value instead of an object, and then the targeted key
 will be replaced by this value.
 
+Can be a function, which then should return either a flat value or an object.
+The function will take the current targeted object as parameter.
+
 
 See [tests](https://github.com/yohanboniface/json-localizer/blob/master/tests/index.js) for more examples.

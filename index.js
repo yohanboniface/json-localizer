@@ -54,14 +54,16 @@ L.prototype.if = function (rules) {
 };
 
 L.prototype.then = function (rules) {
-    if (!(rules instanceof Object) || Array.isArray(rules)) {
-        var tmp = rules;
-        rules = {};
-        rules[this.leaf] = tmp;
-    }
+    var toapply = rules;
     for (var i = 0; i < this.target.length; i++) {
-        for (var path in rules) {
-            L.setValue(this.target[i], path, rules[path]);
+        if (typeof rules === 'function') toapply = rules(this.target[i]);
+        if (!(toapply instanceof Object) || Array.isArray(toapply)) {
+            var tmp = toapply;
+            toapply = {};
+            toapply[this.leaf] = tmp;
+        }
+        for (var path in toapply) {
+            L.setValue(this.target[i], path, toapply[path]);
         }
     }
     return this;
