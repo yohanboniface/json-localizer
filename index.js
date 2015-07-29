@@ -19,7 +19,7 @@ L.prototype.where = function (path) {
         this.leaf = paths[i];
         if (typeof step !== 'undefined') {
             if (i === leaf) {
-                if (L.isObject(step) || L.isObjectsArray(step)) source = step;
+                if (L.isObject(step) || L.isObjectsArray(step)) source = step;
                 else continue;  // Keep parent as reference.
             } else if (step instanceof Object) {
                 source = step; // Continue.
@@ -68,7 +68,7 @@ L.prototype.then = function (rules) {
 };
 
 L.prototype.fromString = function (rules) {
-    rules = typeof rules === "string" ? JSON.parse(rules) : rules;
+    rules = typeof rules === 'string' ? JSON.parse(rules) : rules;
     if (!Array.isArray(rules)) rules = [rules];
     for (var i = 0, rule; i < rules.length; i++) {
         rule = rules[i];
@@ -86,8 +86,8 @@ L.prototype.fromString = function (rules) {
 L.flaten = function (obj) {
     var output = {};
     var flaten = function (els, prefix) {
-        prefix = prefix && prefix + '.' || "";
-        var key;
+        prefix = prefix && prefix + '.' || '';
+        var key, value;
         for (var el in els) {
             key = prefix + el;
             value = els[el];
@@ -105,27 +105,21 @@ L.flaten = function (obj) {
 L.hasValue = function (obj, path, expected) {
     var flat = L.flaten(obj),
         current = flat[path];
-    return expected instanceof Array && expected.indexOf(current) != -1 || current == expected;
+    return expected instanceof Array && expected.indexOf(current) !== -1 || current === expected;
 };
 
 L.setValue = function(obj, path, value) {
     var path_elements = path.split('.'),
         field = obj;
     for (var el in path_elements) {
-        if (typeof field === "undefined") {
-            break;
-        }
-        if (L.isObject(field[path_elements[el]])) {
-            field = field[path_elements[el]];
-        }
-        else {
-            field[path_elements[el]] = value;
-        }
+        if (typeof field === 'undefined') break;
+        if (L.isObject(field[path_elements[el]])) field = field[path_elements[el]];
+        else field[path_elements[el]] = value;
     }
 };
 
 L.isObject = function (what) {
-    return what && what.constructor == Object;
+    return what && what.constructor === Object;
 };
 
 L.isObjectsArray = function (what) {
