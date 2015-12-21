@@ -1,4 +1,4 @@
-# localize-json
+# json-localizer
 When you need humans to localize a json object from a
 config file. Typical use case is for a local config file to extend
 an application config on the fly.
@@ -6,7 +6,7 @@ an application config on the fly.
 ## Example
 
 ```
-var Localizer = require('localize-json').Localizer;
+var Localizer = require('json-localizer').Localizer;
 var localizer = new Localizer(myobj);
 localizer.where('path.to.prop').if({'prop': 'hasvalue'}.then({'addthis': 'propandvalue'}));
 // `if` is optional
